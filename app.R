@@ -4,6 +4,7 @@ library(shinycssloaders)
 library(DT)
 library(tidyverse)
 library(colourpicker)
+library(Cairo)
 
 source("gwas_emmax_cov.R")
 options(shiny.maxRequestSize = 500*1024^2)
@@ -76,7 +77,7 @@ body <- dashboardBody(
                 withSpinner(DT::dataTableOutput("gwas_res"), type = "7"),
                 br(),
                 br(),
-                downloadLink("Download_gwas_res", "Download your results of GWAS")
+                downloadButton("download_gwas_res", "Download GWAS Results")
               )
             ),
             br(),
@@ -114,7 +115,7 @@ body <- dashboardBody(
                 withSpinner(plotOutput("manhattanplot"), type = "4"),
                 br(),
                 br(),
-                downloadLink("download_manhattanplot", "Manhattan Plot Download")
+                downloadButton("download_manhattanplot", "Manhattan Plot Download")
               )),
             fluidRow(
               shinydashboard::box(
@@ -124,7 +125,7 @@ body <- dashboardBody(
                 withSpinner(plotOutput("qqplot"), type = "4"),
                 br(),
                 br(),
-                downloadLink("download_qqplot","QQ Plot Download")
+                downloadButton("download_qqplot","QQ Plot Download")
               )
             )
             
@@ -136,6 +137,8 @@ ui <- dashboardPage(header = header, sidebar = sidebar, body = body)
 
 #===================SERVER part============================
 server <- function(input, output, session){
+  
+  options(shiny.usecairo=TRUE)
   
   #--------------------global value setting----------------------
   global_value <- reactiveValues(
@@ -192,7 +195,7 @@ server <- function(input, output, session){
         })
   
   observeEvent(input$run_gwas,{
-    global_value$trait=input$trait
+    global_value$trait <- input$trait
   })
   
   # ---------------gwas results-----------------
@@ -205,9 +208,9 @@ server <- function(input, output, session){
     write.table(file, trait_name(), col.names = FALSE, row.names = FALSE, quote = FALSE)
     gwas_emmax(phenotype=trait_name(), out = out)
     res <- read.table(paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), header = FALSE, stringsAsFactors = FALSE)
-    global_value$res <- res
     colnames(res) <- c("SNPID","beta","SE(beta)","p-value")
-    DT::datatable(res,
+    global_value$res <- res
+    DT::datatable(global_value$res,
                   rownames = FALSE,
                   filter = "top",
                   selection = "single",
@@ -217,6 +220,17 @@ server <- function(input, output, session){
                     columnDefs=list(list(className="dt-right", target="_all"))
                   ))
   })
+  
+  #--------------download gwas_res---------
+  
+  output$download_gwas_res <- downloadHandler(
+    filename = function(){
+      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.txt")
+    },
+    content = function(file){
+      write.table(global_value$res, file, row.names = FALSE, col.names = TRUE, quote = FALSE)
+    }
+  )
   
   #=================Visualization of GWAS results: manhattan plot and qq plot=========
   observeEvent(input$run_vis,{
@@ -236,8 +250,22 @@ server <- function(input, output, session){
     gwas_data <- global_value$res
     gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
     global_value$gwas_res_emmax_vis <- gwas_data_vis
-    ggmanhattan(gwasres = gwas_data_vis,color = c(input$col1,input$col2), p_select = input$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",input$trait,")"))
+    ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
   })
+  
+  #--------------------download manhattan plot---------------
+  output$download_manhattanplot <- downloadHandler(
+    filename = function(){
+      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.pdf")
+    },
+    content = function(file){
+      cairo_pdf(file, width = 15*300, height = 6*300,antialias = "subpixel",fallback_resolution = 300)
+      ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(input$col1,input$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
+      dev.off()
+    },
+    contentType = "application/pdf"
+  )
+  
   
   #----------------qqplot-------------
   output$qqplot <- renderPlot({
