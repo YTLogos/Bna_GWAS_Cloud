@@ -5,6 +5,7 @@ library(DT)
 library(tidyverse)
 library(colourpicker)
 library(Cairo)
+library(openxlsx)
 
 source("gwas_emmax_cov.R")
 options(shiny.maxRequestSize = 500*1024^2)
@@ -97,7 +98,9 @@ body <- dashboardBody(
                 column(3,
                        colourInput("col2","Select Color2: ","#556B2F")),
                 column(4,offset = 1,
-                       sliderInput("logpvalue", "Choose -log 10 p-value: ", min = -log10(0.01), max = -log10(0.00000001), value = -log10(0.00001), step = 0.5)),
+                       sliderInput("logpvalue", "Choose -log 10 p-value: ", min =
+                                     -log10(0.01), max = -log10(0.00000001), value =
+                                     -log10(0.00001), step = 0.5)),
                 column(6,offset = 5,
                        actionButton("run_vis",
                                     "Run Visualization",
@@ -129,8 +132,51 @@ body <- dashboardBody(
               )
             )
             
+            ),
+#---------------------------tabitem: extraction-------------------------
+    tabItem(tabName = "extraction",
+            fluidRow(
+              #-----------select params for extraction------------
+              shinydashboard::box(
+                title = "Extract genes based on significant SNPs",
+                status = "primary",
+                width = 12,
+                column(6,
+                       sliderInput("sig_p", "Choose significant -log 10 p-value: ", min =
+                                     -log10(0.01), max = -log10(0.00000000001), value=
+                                     -log10(0.000001), step = 0.5)),
+                column(6,
+                       sliderInput("distance","Choose the distance (kb): ",
+                                   min = 0,
+                                   max = 150,
+                                   value = 75,
+                                   step = 5)
+                       ),
+                column(6,
+                       offset = 5,
+                       actionButton("run_extraction",
+                                    "Run Extraction",
+                                    icon("magic"),
+                                    style="color:#fff; background-color:#337ab7; border-color:#2e6da4"))
+                       )
+              ),
+            fluidRow(
+              #----------the extracted genes-------------
+              shinydashboard::box(
+                title = "Genes extracted based on significant SNPs",
+                status = "info",
+                width = 6,
+                withSpinner(DT::dataTableOutput("related_genes"), type = "7"),
+                br(),
+                br(),
+                br(),
+                br(),
+                downloadButton("download_genes", "Download Genes")
+              )
             )
-          )
+            )
+            )
+
 )
 #==================================UI part==========================
 ui <- dashboardPage(header = header, sidebar = sidebar, body = body)
@@ -149,7 +195,10 @@ server <- function(input, output, session){
     col1 = NULL,
     col2 = NULL,
     logpvalue = NULL,
-    gwas_res_emmax_vis = NULL
+    sig_p = NULL,
+    distance = NULL,
+    gwas_res_emmax_vis = NULL,
+    gene_extracted = NULL
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
@@ -176,6 +225,8 @@ server <- function(input, output, session){
     global_value$p_data <- read.table(input$phenotype$datapath, header = FALSE, stringsAsFactors = FALSE)
     global_value$samples <- global_value$p_data[,1]
     })
+  
+  
   #-----------output of histogram of phenotype----------------
   output$phenotype_vis <- renderPlot({
     validate(
@@ -254,17 +305,17 @@ server <- function(input, output, session){
   })
   
   #--------------------download manhattan plot---------------
-  output$download_manhattanplot <- downloadHandler(
-    filename = function(){
-      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.pdf")
-    },
-    content = function(file){
-      cairo_pdf(file, width = 15*300, height = 6*300,antialias = "subpixel",fallback_resolution = 300)
-      ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(input$col1,input$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
-      dev.off()
-    },
-    contentType = "application/pdf"
-  )
+  # output$download_manhattanplot <- downloadHandler(
+  #   filename = function(){
+  #     paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.pdf")
+  #   },
+  #   content = function(file){
+  #     cairo_pdf(file, width = 15*300, height = 6*300,antialias = "subpixel",fallback_resolution = 300)
+  #     ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(input$col1,input$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
+  #     dev.off()
+  #   },
+  #   contentType = "application/pdf"
+  # )
   
   
   #----------------qqplot-------------
@@ -275,6 +326,21 @@ server <- function(input, output, session){
     )
     qqman::qq(global_value$gwas_res_emmax_vis$P)
   })
+  
+#==========================Extraction====================================
+  observeEvent(input$run_extraction,{
+    global_value$sig_p <- input$sig_p
+    global_value$distance <- input$distance
+  })
+  output$related_genes <- renderDT({
+    validate(
+      need( ! is.null(global_value$sig_p), "Choose Significant p-value first"),
+      need( ! is.null(global_value$distance), "Choose Distance first")
+    )
+    
+  })
+  
+  
   
 }
 

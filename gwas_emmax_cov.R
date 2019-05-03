@@ -5,7 +5,8 @@ genotype <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_im
 k <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.hBN.kinf"
 cov <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/K_Q/Brnu.emmax.cov.txt"
 tfam_path <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.tfam"
-
+Bna_anno <- "/database/reference/Bna_Darmor/Bna_Darmor_anno.xlsx"
+Bna_anno <- openxlsx::read.xlsx(Bna_anno)
 
 global_theme <-  theme(axis.text.y   = element_text(size=13, face="bold", colour = "black"),
                          axis.text.x   = element_text(size=13, face="bold", colour = "black"),
