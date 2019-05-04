@@ -67,7 +67,7 @@ ggmanhattan <- function(
   vlinesize=0.75,
   title="Manhattan Plot",
   color= c("#FF8C00", "#556B2F"),
-  pointsize= 1.05,
+  pointsize= 0.75,
   p_select,
   verbose=TRUE,...)
 {
@@ -130,7 +130,7 @@ ggmanhattan <- function(
   df$marker <- -log10(df$pvalue)
   
   #specify the y limit
-  ymax <- max(df$marker)
+  ymax <- max(df$marker)+0.1
   
   #specify x axis tick points
   

@@ -6,8 +6,11 @@ k <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.hB
 cov <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/K_Q/Brnu.emmax.cov.txt"
 tfam_path <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.tfam"
 Bna_anno <- "/database/reference/Bna_Darmor/Bna_Darmor_anno.xlsx"
+Bna_darmor_geneid <- "/database/reference/Bna_Darmor/Bna_darmor_gene_id_info.txt"
 Bna_anno <- openxlsx::read.xlsx(Bna_anno)
-
+Bna_geneid <- read.table(Bna_darmor_geneid, header = FALSE, stringsAsFactors = FALSE)
+colnames(Bna_geneid) <- c("chr", "start", "end", "gene")
+Bna_geneid$chr <- as.character(Bna_geneid$chr)
 global_theme <-  theme(axis.text.y   = element_text(size=13, face="bold", colour = "black"),
                          axis.text.x   = element_text(size=13, face="bold", colour = "black"),
                          axis.title.x  = element_text(size=13, face="bold"),
@@ -15,7 +18,7 @@ global_theme <-  theme(axis.text.y   = element_text(size=13, face="bold", colour
                          panel.background = element_rect(fill = "white"),
                          axis.ticks.length = unit(.25, "cm"),
                          plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5),
-                         plot.caption = element_text(size = 12),
+                         plot.caption = element_text(size = 12, face="bold"),
                          plot.subtitle = element_text(hjust = 0.5, size = 10),
                          strip.background = element_rect(fill = "white"),
                          strip.text = element_text(size = 18, hjust = 0, colour = "black", face ="bold"),

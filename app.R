@@ -14,13 +14,42 @@ header <- dashboardHeader(title = "GWAS-Cloud")
 sidebar <- dashboardSidebar(
   
   sidebarMenu(
-    menuItem("Introduction", tabName = "intro", icon = icon("user")),
+    menuItem("Introduction", tabName = "intro", icon = icon("user"),
+             menuSubItem("Introduction"),
+             menuSubItem("Analysis Workflow"),
+             menuSubItem("Q&A")),
     menuItem("GWAS", tabName = "gwas", icon = icon("galactic-senate")),
     menuItem("Visualization", tabName = "vis", icon = icon("braille")),
     menuItem("Extraction",tabName = "extraction", icon = icon("accusoft")),
     menuItem("Annotation", tabName = "anno", icon = icon("list")),
     menuItem("Feedback", tabName = "feedback", icon = icon("comment-alt"))
-  )
+  ),
+  absolutePanel(
+    bottom = 97,
+    left = 10,
+    draggable = F,
+    width='100%',
+    height="auto",
+    p(a(icon('github fa-2x'),href='https://github.com/YTLogos',target='_blank'))),
+  absolutePanel(
+    bottom = 97,
+    left = 55,
+    draggable = F,
+    width='100%',
+    height="auto",
+    p(a(icon('paper-plane fa-2x'),href='mailto:tyan@zju.edu.cn',target='_blank'))),
+  
+  
+  absolutePanel(
+    bottom = 40,
+    left = 5,
+    draggable = F,
+    width='100%',
+    height='auto',
+    div("Developed by",span("Jianglab", style="color:red"), ", College of"),
+    div("Agriculture and Biotechnology (CAB),"),
+    div("Zhejiang University")
+  ) 
 )
 
 body <- dashboardBody(
@@ -75,7 +104,7 @@ body <- dashboardBody(
               shinydashboard::box(
                 status = "info",
                 title = "Result of GWAS",
-                withSpinner(DT::dataTableOutput("gwas_res"), type = "7"),
+                withSpinner(DT::dataTableOutput("gwas_res"), type = "6"),
                 br(),
                 br(),
                 downloadButton("download_gwas_res", "Download GWAS Results")
@@ -115,17 +144,17 @@ body <- dashboardBody(
                 title = "Manhattan Plot",
                 status = "primary",
                 width = 12,
-                withSpinner(plotOutput("manhattanplot"), type = "4"),
+                withSpinner(plotOutput("manhattanplot"), type = "6"),
                 br(),
                 br(),
-                downloadButton("download_manhattanplot", "Manhattan Plot Download")
+                downloadButton("dm", "Manhattan Plot Download")
               )),
             fluidRow(
               shinydashboard::box(
                 title = "QQ plot",
                 status = "warning",
                 width = 5,
-                withSpinner(plotOutput("qqplot"), type = "4"),
+                withSpinner(plotOutput("qqplot"), type = "8"),
                 br(),
                 br(),
                 downloadButton("download_qqplot","QQ Plot Download")
@@ -174,12 +203,42 @@ body <- dashboardBody(
                 downloadButton("download_genes", "Download Genes")
               )
             )
+            ),
+#-----------------------------tabitem: gene annotation------------------
+    tabItem(tabName = "anno",
+            #---------gene annotation-------
+            fluidRow(
+              shinydashboard::box(
+                title = "Gene annotation based on different databases",
+                status = "info",
+                width = 12,
+                tags$p("If you are sure your previous analysis are right, then clink the button: Run Annotation"),
+                br(),
+                column(6,
+                       offset = 5,
+                       actionButton("run_annotation",
+                                    "Run Annotation",
+                                    icon("magic"),
+                                    style="color:#fff; background-color:#337ab7; border-color:#2e6da4"))
+              )
+            ),
+            fluidRow(
+              shinydashboard::box(
+                title = "Gene annotation",
+                status = "warning",
+                width = 12,
+                withSpinner(DT::dataTableOutput("gene_annotation"), type = "7"),
+                br(),
+                br(),
+                downloadButton("gene_anno_download", "Download Genes")
+              )
+            )
             )
             )
 
 )
 #==================================UI part==========================
-ui <- dashboardPage(header = header, sidebar = sidebar, body = body)
+ui <- dashboardPage(header = header, sidebar = sidebar, body = body, skin = "red")
 
 #===================SERVER part============================
 server <- function(input, output, session){
@@ -198,7 +257,8 @@ server <- function(input, output, session){
     sig_p = NULL,
     distance = NULL,
     gwas_res_emmax_vis = NULL,
-    gene_extracted = NULL
+    gene_extracted = NULL,
+    gene_sig_select = NULL
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
@@ -241,7 +301,7 @@ server <- function(input, output, session){
       labs(title = paste0("Distribution of Phenotype ","(", input$trait,")"),
            x=paste0("Value of Phenotype ","(",input$trait,")"),
            y="Density",
-           caption="Be carful of your phenotype data, it will affect the results of GWAS greatly!")+
+           caption="\n Be carful of your phenotype data, it will affect the results of GWAS greatly!")+
       global_theme
         })
   
@@ -293,28 +353,38 @@ server <- function(input, output, session){
   
   #-----------manhattan plot--------------
   source("manhattan_qq_plot.R")
+  manhattan <- function(){
+    gwas_data <- global_value$res
+    gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
+    global_value$gwas_res_emmax_vis <- gwas_data_vis
+    ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"), vlinesize = 0.5)
+  }
+  
   output$manhattanplot <- renderPlot({
     validate(
       need( ! is.null(global_value$col1), "Select the Colors"),
       need( ! is.null(global_value$logpvalue),"Select the logpvalue")
     )
-    gwas_data <- global_value$res
-    gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
-    global_value$gwas_res_emmax_vis <- gwas_data_vis
-    ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
+    manhattan()
+    # gwas_data <- global_value$res
+    # gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
+    # global_value$gwas_res_emmax_vis <- gwas_data_vis
+    # ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
   })
   
   #--------------------download manhattan plot---------------
-  # output$download_manhattanplot <- downloadHandler(
+  # output$dm <- downloadHandler(
   #   filename = function(){
-  #     paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.pdf")
+  #     paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.png")
   #   },
   #   content = function(file){
-  #     cairo_pdf(file, width = 15*300, height = 6*300,antialias = "subpixel",fallback_resolution = 300)
-  #     ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(input$col1,input$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
-  #     dev.off()
+  #     png(file)
+  #     # p <- manhattan()
+  #     # print(p)
+  #     # dev.off()   #test
+  #     plot(faithful)
   #   },
-  #   contentType = "application/pdf"
+  #   contentType = "image/png"
   # )
   
   
@@ -328,20 +398,75 @@ server <- function(input, output, session){
   })
   
 #==========================Extraction====================================
+  source("extraxt_gene.R")
+  
   observeEvent(input$run_extraction,{
     global_value$sig_p <- input$sig_p
     global_value$distance <- input$distance
   })
+  
+  #----------------output of gene select based on p-value
   output$related_genes <- renderDT({
     validate(
       need( ! is.null(global_value$sig_p), "Choose Significant p-value first"),
       need( ! is.null(global_value$distance), "Choose Distance first")
     )
-    
+    p <- 10^-(global_value$sig_p)
+    snp_select <- global_value$gwas_res_emmax_vis%>%dplyr::filter(P<=p)
+    chr_select <- as.character(unique(snp_select$CHR))
+    Bna_geneid_select <- Bna_geneid%>%dplyr::filter(chr %in% chr_select)
+    gene_sig_select <- get_gene_from_snp(gff = Bna_geneid_select, sig.snp = snp_select, distance = global_value$distance, file.save = FALSE)
+    global_value$gene_sig_select <- gene_sig_select
+    DT::datatable(global_value$gene_sig_select,
+                  rownames = FALSE,
+                  filter = "top",
+                  selection = "single",
+                  options = list(
+                    pageLength=10,
+                    scrollX=TRUE,
+                    columnDefs=list(list(className="dt-right", target="_all"))
+                  ))
   })
   
+  #--------------download significant genes---------
   
+  output$download_genes <- downloadHandler(
+    filename = function(){
+      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,".txt")
+    },
+    content = function(file){
+      write.table(global_value$gene_sig_select, file, row.names = FALSE, col.names = TRUE, quote = FALSE)
+    }
+  )
   
+#=========================gene annotation===================
+  gene_anno_data <- eventReactive(input$run_annotation,{
+    gene_id <- unique(global_value$gene_sig_select$geneid)
+    gene_anno_select <- Bna_anno%>%dplyr::filter(geneid %in% gene_id)
+    return(gene_anno_select)
+  })
+  
+  output$gene_annotation <- renderDT({
+    DT::datatable(gene_anno_data(),
+                  rownames = FALSE,
+                  filter = "top",
+                  selection = "single",
+                  options = list(
+                    pageLength=10,
+                    scrollX=TRUE,
+                    columnDefs=list(list(className="dt-right", target="_all"))
+                  ))
+  })
+  
+  #---------------gene annotation download---------------
+  output$gene_anno_download <- downloadHandler(
+    filename = function(){
+      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"anno.txt")
+    },
+    content = function(file){
+      write.table(gene_anno_data(), file, row.names = FALSE, col.names = TRUE, quote = FALSE)
+    }
+  )
 }
 
 shinyApp(ui, server)
