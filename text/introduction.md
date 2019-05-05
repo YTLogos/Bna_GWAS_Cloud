@@ -12,7 +12,7 @@ In order to make better use of this huge ***B. napus*** gerplasm accessions, we 
 
 ### 1.1 phenotype data
 
-You just need upload your phenotype data to run GWAS. Here we just use the `297` core collection gerplasm which represent the most of genetic resources of 1000 *B. napus* erplasm accessions. an example of the expected input data format is present as below:
+You just need upload your phenotype data to run GWAS. Here we just use the `297` core collection gerplasm which represent the most of genetic resources of 1000 *B. napus* gerplasm accessions. an example of the expected input data format is present as below:
 
 <style>
 table th:first-of-type {
