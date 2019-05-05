@@ -105,6 +105,7 @@ get_gene_from_snp <- function(
   chr <- vector(mode = "numeric")
   start <- vector(mode = "numeric")
   end <- vector(mode = "numeric")
+  sig.p <- vector(mode = "numeric")
   
   if(!file.save) {
     if(verbose) {
@@ -137,6 +138,7 @@ get_gene_from_snp <- function(
           chr <- append(chr, gff[j,][[gff.chrom]])
           start <- append(start, gff[j,][[gene_start]])
           end <- append(end, gff[j,][[gene_end]])
+          #sig.p <- append(sig.p, sig.snp[i,][[pvalue]])
         }
       }
     }

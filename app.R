@@ -15,9 +15,9 @@ sidebar <- dashboardSidebar(
   
   sidebarMenu(
     menuItem("Introduction", tabName = "intro", icon = icon("user"),
-             menuSubItem("Introduction"),
-             menuSubItem("Analysis Workflow"),
-             menuSubItem("Q&A")),
+             menuSubItem("Introduction", tabName = "intro1"),
+             menuSubItem("Analysis Workflow",tabName = "aw"),
+             menuSubItem("Q&A", tabName = "qa")),
     menuItem("GWAS", tabName = "gwas", icon = icon("galactic-senate")),
     menuItem("Visualization", tabName = "vis", icon = icon("braille")),
     menuItem("Extraction",tabName = "extraction", icon = icon("accusoft")),
@@ -25,30 +25,36 @@ sidebar <- dashboardSidebar(
     menuItem("Feedback", tabName = "feedback", icon = icon("comment-alt"))
   ),
   absolutePanel(
-    bottom = 97,
+    bottom = 77,
     left = 10,
     draggable = F,
     width='100%',
     height="auto",
     p(a(icon('github fa-2x'),href='https://github.com/YTLogos',target='_blank'))),
   absolutePanel(
-    bottom = 97,
+    bottom = 77,
     left = 55,
     draggable = F,
     width='100%',
     height="auto",
     p(a(icon('paper-plane fa-2x'),href='mailto:tyan@zju.edu.cn',target='_blank'))),
-  
+  absolutePanel(
+    bottom = 77,
+    left = 100,
+    draggable = F,
+    width='100%',
+    height="auto",
+    p(a(icon('link fa-2x'),href='https://taoyan.netlify.com/',target='_blank'))),
   
   absolutePanel(
-    bottom = 40,
+    bottom = 20,
     left = 5,
     draggable = F,
     width='100%',
     height='auto',
-    div("Developed by",span("Jianglab", style="color:red"), ", College of"),
-    div("Agriculture and Biotechnology (CAB),"),
-    div("Zhejiang University")
+    div(span("Developed by",style="color:grey"),a("Jianglab", href="https://person.zju.edu.cn/en/0005104"), span(a(", College of", href="http://www.cab.zju.edu.cn/en/"), style="color:grey")),
+    div(a("Agriculture and Biotechnology (CAB),", href='http://www.cab.zju.edu.cn/en/'), style="color:grey"),
+    div("Zhejiang University", style="color:grey")
   ) 
 )
 
@@ -57,9 +63,22 @@ body <- dashboardBody(
   tabItems(
     
 # -------------------tabItem: Introduction of GWAS------------------------------------
-    tabItem(tabName = "intro",
-            htmlOutput(outputId = "GWAS_Introduction")
+    tabItem(tabName = "intro1",
+            includeMarkdown(file.path("text","introduction.md"))
     ),
+    tabItem(tabName = "aw",
+            includeMarkdown(file.path("text","workflow.md"))
+            ),
+    tabItem(tabName = "qa",
+            includeMarkdown(file.path("text","qa.md"))
+            ),
+
+
+#----------------------tabitem: feedback----------------
+    tabItem(tabName = "feedback",
+            includeMarkdown(file.path("text","feedback.md"))
+            ),
+
     
 # -----------------------tabitem: run gwas --------------------------------------
     tabItem(tabName = "gwas",
@@ -301,7 +320,7 @@ server <- function(input, output, session){
       labs(title = paste0("Distribution of Phenotype ","(", input$trait,")"),
            x=paste0("Value of Phenotype ","(",input$trait,")"),
            y="Density",
-           caption="\n Be carful of your phenotype data, it will affect the results of GWAS greatly!")+
+           caption="\n Be carful of your phenotype data, \n it will affect the results of GWAS greatly!")+
       global_theme
         })
   
@@ -432,7 +451,7 @@ server <- function(input, output, session){
   
   output$download_genes <- downloadHandler(
     filename = function(){
-      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,".txt")
+      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"Kb.txt")
     },
     content = function(file){
       write.table(global_value$gene_sig_select, file, row.names = FALSE, col.names = TRUE, quote = FALSE)
@@ -461,7 +480,7 @@ server <- function(input, output, session){
   #---------------gene annotation download---------------
   output$gene_anno_download <- downloadHandler(
     filename = function(){
-      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"anno.txt")
+      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"Kb.anno.txt")
     },
     content = function(file){
       write.table(gene_anno_data(), file, row.names = FALSE, col.names = TRUE, quote = FALSE)

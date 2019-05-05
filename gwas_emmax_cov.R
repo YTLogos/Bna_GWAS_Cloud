@@ -18,7 +18,7 @@ global_theme <-  theme(axis.text.y   = element_text(size=13, face="bold", colour
                          panel.background = element_rect(fill = "white"),
                          axis.ticks.length = unit(.25, "cm"),
                          plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5),
-                         plot.caption = element_text(size = 12, face="bold"),
+                         plot.caption = element_text(size = 10, face="bold"),
                          plot.subtitle = element_text(hjust = 0.5, size = 10),
                          strip.background = element_rect(fill = "white"),
                          strip.text = element_text(size = 18, hjust = 0, colour = "black", face ="bold"),
