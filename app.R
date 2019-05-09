@@ -439,7 +439,7 @@ server <- function(input, output, session){
     snp_select <- global_value$gwas_res_emmax_vis%>%dplyr::filter(P<=p)
     chr_select <- as.character(unique(snp_select$CHR))
     Bna_geneid_select <- Bna_geneid%>%dplyr::filter(chr %in% chr_select)
-    gene_sig_select <- get_gene_from_snp(gff = Bna_geneid_select, sig.snp = snp_select, distance = global_value$distance, file.save = FALSE)
+    gene_sig_select <- get_gene_from_snp(gff = Bna_geneid_select, sig.snp = snp_select, distance = global_value$distance)
     global_value$gene_sig_select <- gene_sig_select
     DT::datatable(global_value$gene_sig_select,
                   rownames = FALSE,
@@ -465,7 +465,7 @@ server <- function(input, output, session){
   
 #=========================gene annotation===================
   gene_anno_data <- eventReactive(input$run_annotation,{
-    gene_id <- unique(global_value$gene_sig_select$geneid)
+    gene_id <- unique(global_value$gene_sig_select$gene)
     gene_anno_select <- Bna_anno%>%dplyr::filter(geneid %in% gene_id)
     return(gene_anno_select)
   })
