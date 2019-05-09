@@ -59,6 +59,8 @@ get_gene_from_snp <- function(
         return(snp_gene)
       }
   }
+  
+  plan(multiprocess)
   test <- future.apply::future_lapply(seq(1,nrow(sig.snp)),findgene)
   gene_snp <- do.call(rbind,test)
   return(gene_snp)

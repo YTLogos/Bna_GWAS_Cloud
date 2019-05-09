@@ -153,7 +153,7 @@ ggmanhattan <- function(
     scale_y_continuous(expand = c(0,0), limits = c(0, ymax), breaks = seq(0,ymax,2))+
     guides(colour=FALSE)+
     labs(x="Chromosomes",y=expression(bold(-log[10]~(pvalue))), title = title)+
-    geom_vline(xintercept = snp_num-1000, colour="#C0C0C0", size=vlinesize, linetype=vlinetype)+
+    geom_vline(xintercept = snp_num-1000, colour="#E8E8E8", size=vlinesize, linetype=vlinetype)+
     geom_hline(yintercept = p_select, color="blue")+
     scale_color_manual(values = color)+
     theme(panel.grid.major = element_blank(),

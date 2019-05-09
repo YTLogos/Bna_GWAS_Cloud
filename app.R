@@ -7,6 +7,7 @@ library(colourpicker)
 library(Cairo)
 library(openxlsx)
 library(data.table)
+library(future.apply)
 
 rm(list=ls())
 source("gwas_emmax_cov.R")
