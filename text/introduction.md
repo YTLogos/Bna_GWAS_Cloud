@@ -12,7 +12,9 @@ In order to make better use of this huge ***B. napus*** gerplasm accessions, we 
 
 ### 1.1 phenotype data
 
-You just need upload your phenotype data to run GWAS. Here we just use the `297` core collection gerplasm which represent the most of genetic resources of 1000 *B. napus* gerplasm accessions. an example of the expected input data format is present as below:
+> **Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!**
+
+You just need upload your phenotype data to run GWAS. Here we just use the `297` core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
 
 <style>
 table th:first-of-type {
@@ -43,14 +45,14 @@ An example of the expected input phenotype dataset can be accessible [here](http
 
 Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the [EMMAX](https://genome.sph.umich.edu/wiki/EMMAX) model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
 
-# Visualization
+# 2、Visualization
 
 For the `Visualization` section in this App, it is aiming to visualize the Manhattan plot and QQ plot. You can choose the alternate colors for alternate chromosomes and p-value threshold (default: p-value=5).
 
-# Extraction
+# 3、Extraction
 
 The extraction of significant genes is based on the significant p-value of SNPs. So here you need choose the p-value threshold and the distance up/down-stream of SNPs (`recommended`) (default: 75kb).
 
-# Annotation
+# 4、Annotation
 
 This section is designed for gene annotation based on different databases (`eggNOG`, `GO`, `KEGG`, `NR`, etc.).

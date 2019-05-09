@@ -208,17 +208,3 @@ manhattan_data_prepare <- function(gwas_res_emmax){
   gwas_res_emmax$BP <- as.integer(gwas_res_emmax$BP)
   return(gwas_res_emmax)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

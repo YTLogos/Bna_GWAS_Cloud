@@ -6,11 +6,13 @@ library(tidyverse)
 library(colourpicker)
 library(Cairo)
 library(openxlsx)
+library(data.table)
 
+rm(list=ls())
 source("gwas_emmax_cov.R")
 options(shiny.maxRequestSize = 500*1024^2)
 
-header <- dashboardHeader(title = "GWAS-Cloud")
+header <- dashboardHeader(title = "Bna-GWAS-Cloud")
 sidebar <- dashboardSidebar(
   
   sidebarMenu(
@@ -277,7 +279,8 @@ server <- function(input, output, session){
     distance = NULL,
     gwas_res_emmax_vis = NULL,
     gene_extracted = NULL,
-    gene_sig_select = NULL
+    gene_sig_select = NULL,
+    manhattan_plot = NULL
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
@@ -337,7 +340,7 @@ server <- function(input, output, session){
     file <- pheno()
     write.table(file, trait_name(), col.names = FALSE, row.names = FALSE, quote = FALSE)
     gwas_emmax(phenotype=trait_name(), out = out)
-    res <- read.table(paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), header = FALSE, stringsAsFactors = FALSE)
+    res <- data.table::fread(paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
     colnames(res) <- c("SNPID","beta","SE(beta)","p-value")
     global_value$res <- res
     DT::datatable(global_value$res,
@@ -379,12 +382,17 @@ server <- function(input, output, session){
     ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"), vlinesize = 0.5)
   }
   
+  
+  
   output$manhattanplot <- renderPlot({
     validate(
       need( ! is.null(global_value$col1), "Select the Colors"),
       need( ! is.null(global_value$logpvalue),"Select the logpvalue")
     )
-    manhattan()
+    
+    p_manhattan <- manhattan()
+    global_value$manhattan_plot <- p_manhattan
+    print(global_value$manhattan_plot)
     # gwas_data <- global_value$res
     # gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
     # global_value$gwas_res_emmax_vis <- gwas_data_vis
@@ -392,19 +400,16 @@ server <- function(input, output, session){
   })
   
   #--------------------download manhattan plot---------------
-  # output$dm <- downloadHandler(
-  #   filename = function(){
-  #     paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.png")
-  #   },
-  #   content = function(file){
-  #     png(file)
-  #     # p <- manhattan()
-  #     # print(p)
-  #     # dev.off()   #test
-  #     plot(faithful)
-  #   },
-  #   contentType = "image/png"
-  # )
+  output$dm <- downloadHandler(
+    filename = function(){
+      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.png")
+    },
+    content = function(file){
+      png(file)
+      print(global_value$manhattan_plot)
+    },
+    contentType = "image/png"
+  )
   
   
   #----------------qqplot-------------
