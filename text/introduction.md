@@ -6,7 +6,7 @@ Rapeseed (***Brassica napus*** L.) is an important source of edible oil and prot
 
 In genetics, a genome-wide association study (**GWAS**), also known as whole genome association study (WGAS), is an observational study of a genome-wide set of genetic variants in different individuals to see if any variant is associated with a trait. **GWAS** typically focus on associations between single-nucleotide polymorphisms (**SNPs**) and traits like major agronomic traits.
 
-In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in [**R**](https://www.r-project.org/) with [`Shiny`](https://shiny.rstudio.com/). This aaplication can conduct GWAS, visualization of GWAS results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
+In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in [**R**](https://www.r-project.org/) with [**`Shiny`**](https://shiny.rstudio.com/). This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
 
 ## 1、Data input
 
@@ -14,7 +14,7 @@ In order to make better use of this huge ***B. napus*** gerplasm accessions, we 
 
 > **Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!**
 
-You just need upload your phenotype data to run GWAS. Here we just use the `297` core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
+You just need upload your phenotype data to run **GWAS**. Here we just use the **`297`** core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
 
 <style>
 table th:first-of-type {
@@ -39,11 +39,11 @@ table th:first-of-type {
 
 Where, column one correspond to samples, column two correspond to phenotype values.
 
-An example of the expected input phenotype dataset can be accessible [here](http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt).
+An example of the expected input phenotype dataset can be accessible [**here**](http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt).
 
 ### 1.2 Others
 
-Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the [EMMAX](https://genome.sph.umich.edu/wiki/EMMAX) model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
+Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the [**EMMAX**](https://genome.sph.umich.edu/wiki/EMMAX) model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
 
 # 2、Visualization
 
