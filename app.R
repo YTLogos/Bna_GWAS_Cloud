@@ -125,7 +125,7 @@ body <- dashboardBody(
               ),
               shinydashboard::box(
                 status = "info",
-                title = "Result of GWAS",
+                title = "Result of GWAS (need ~1min)",
                 withSpinner(DT::dataTableOutput("gwas_res"), type = "6"),
                 br(),
                 br(),
@@ -150,7 +150,7 @@ body <- dashboardBody(
                        colourInput("col2","Select Color2: ","#556B2F")),
                 column(4,offset = 1,
                        sliderInput("logpvalue", "Choose -log 10 p-value: ", min =
-                                     -log10(0.01), max = -log10(0.00000001), value =
+                                     -log10(0.01), max = -log10(0.0000000001), value =
                                      -log10(0.00001), step = 0.5)),
                 column(6,offset = 5,
                        actionButton("run_vis",
@@ -163,7 +163,7 @@ body <- dashboardBody(
             fluidRow(
               #-----manhattan plot and QQ plot------
               shinydashboard::box(
-                title = "Manhattan Plot",
+                title = "Manhattan Plot (need ~2min)",
                 status = "primary",
                 width = 12,
                 withSpinner(plotOutput("manhattanplot"), type = "6"),
@@ -216,7 +216,7 @@ body <- dashboardBody(
               shinydashboard::box(
                 title = "Genes extracted based on significant SNPs",
                 status = "info",
-                width = 6,
+                width = 12,
                 withSpinner(DT::dataTableOutput("related_genes"), type = "7"),
                 br(),
                 br(),
@@ -376,6 +376,7 @@ server <- function(input, output, session){
   
   #-----------manhattan plot--------------
   source("manhattan_qq_plot.R")
+  
   manhattan <- function(){
     gwas_data <- global_value$res
     gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
@@ -402,12 +403,13 @@ server <- function(input, output, session){
   
   #--------------------download manhattan plot---------------
   output$dm <- downloadHandler(
-    filename = function(){
+    filename <-  function(){
       paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.png")
     },
-    content = function(file){
-      png(file)
+    content <-  function(file){
+      png(file, width = 15*300, height = 7*300)
       print(global_value$manhattan_plot)
+      dev.off()
     },
     contentType = "image/png"
   )
@@ -421,6 +423,19 @@ server <- function(input, output, session){
     )
     qqman::qq(global_value$gwas_res_emmax_vis$P)
   })
+  
+  #--------------------download QQ plot---------------
+  output$download_qqplot <- downloadHandler(
+    filename <-  function(){
+      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.QQ_plot.png")
+    },
+    content <-  function(file){
+      png(file, width = 7*300, height = 7*300)
+      qqman::qq(global_value$gwas_res_emmax_vis$P)
+      dev.off()
+    },
+    contentType = "image/png"
+  )
   
 #==========================Extraction====================================
   source("extraxt_gene.R")
