@@ -21,7 +21,7 @@ sidebar <- dashboardSidebar(
              menuSubItem("Introduction", tabName = "intro1"),
              menuSubItem("Analysis Workflow",tabName = "aw"),
              menuSubItem("Q&A", tabName = "qa")),
-    menuItem("GWAS", tabName = "gwas", icon = icon("galactic-senate")),
+    menuItem("Run GWAS", tabName = "gwas", icon = icon("galactic-senate")),
     menuItem("Visualization", tabName = "vis", icon = icon("braille")),
     menuItem("Extraction",tabName = "extraction", icon = icon("accusoft")),
     menuItem("Annotation", tabName = "anno", icon = icon("list")),
@@ -88,7 +88,7 @@ body <- dashboardBody(
             #upload phenotype file
             fluidRow(
               shinydashboard::box(
-                title = "Step1: Upload Your Phenotype File",
+                title = "Step1: Upload Your Phenotype File (.txt format)",
                 status = "primary",
                 solidHeader = TRUE,
                 
@@ -125,7 +125,7 @@ body <- dashboardBody(
               ),
               shinydashboard::box(
                 status = "info",
-                title = "Result of GWAS (need ~1min)",
+                title = "Result of GWAS",
                 withSpinner(DT::dataTableOutput("gwas_res"), type = "6"),
                 br(),
                 br(),
@@ -143,6 +143,7 @@ body <- dashboardBody(
               shinydashboard::box(
                 status = "info",
                 title = "Customized the visualization of Manhattan Plot and QQ Plot",
+                solidHeader = TRUE,
                 width = 12,
                 column(3,
                        colourInput("col1","Select Color1: ","#FF8C00")),
@@ -163,7 +164,7 @@ body <- dashboardBody(
             fluidRow(
               #-----manhattan plot and QQ plot------
               shinydashboard::box(
-                title = "Manhattan Plot (need ~2min)",
+                title = "Manhattan Plot",
                 status = "primary",
                 width = 12,
                 withSpinner(plotOutput("manhattanplot"), type = "6"),
@@ -191,6 +192,7 @@ body <- dashboardBody(
               shinydashboard::box(
                 title = "Extract genes based on significant SNPs",
                 status = "primary",
+                solidHeader = TRUE,
                 width = 12,
                 column(6,
                        sliderInput("sig_p", "Choose significant -log 10 p-value: ", min =
@@ -233,6 +235,7 @@ body <- dashboardBody(
               shinydashboard::box(
                 title = "Gene annotation based on different databases",
                 status = "info",
+                solidHeader = TRUE,
                 width = 12,
                 tags$p("If you are sure your previous analysis are right, then clink the button: Run Annotation"),
                 br(),
@@ -281,7 +284,8 @@ server <- function(input, output, session){
     gwas_res_emmax_vis = NULL,
     gene_extracted = NULL,
     gene_sig_select = NULL,
-    manhattan_plot = NULL
+    manhattan_plot = NULL,
+    QQ_plot = NULL
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
@@ -359,11 +363,19 @@ server <- function(input, output, session){
   
   output$download_gwas_res <- downloadHandler(
     filename = function(){
-      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.txt")
+      paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.result.txt")
     },
-    content = function(file){
+      content <-  function(file){
+        withProgress(message = "Download in progress",
+                     detail = "This may take a while...",
+                     value = 0,{
+                       for (i in 1:15){
+                         incProgress(1/15)
+                         Sys.sleep(0.01)
+                       }
+                       
       write.table(global_value$res, file, row.names = FALSE, col.names = TRUE, quote = FALSE)
-    }
+    })}
   )
   
   #=================Visualization of GWAS results: manhattan plot and qq plot=========
@@ -383,15 +395,12 @@ server <- function(input, output, session){
     global_value$gwas_res_emmax_vis <- gwas_data_vis
     ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"), vlinesize = 0.5)
   }
-  
-  
-  
   output$manhattanplot <- renderPlot({
     validate(
       need( ! is.null(global_value$col1), "Select the Colors"),
       need( ! is.null(global_value$logpvalue),"Select the logpvalue")
     )
-    
+
     p_manhattan <- manhattan()
     global_value$manhattan_plot <- p_manhattan
     print(global_value$manhattan_plot)
@@ -407,21 +416,34 @@ server <- function(input, output, session){
       paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.manhattan.png")
     },
     content <-  function(file){
-      png(file, width = 15*300, height = 7*300)
+      withProgress(message = "Download in progress",
+                   detail = "This may take a while...",
+                   value = 0,{
+                     for (i in 1:15){
+                       incProgress(1/15)
+                       Sys.sleep(0.01)
+                     }
+      png(file, width = 15*300, height = 7*300, res = 300)
       print(global_value$manhattan_plot)
       dev.off()
-    },
-    contentType = "image/png"
+    })}
   )
+      
   
   
   #----------------qqplot-------------
+  
+  myQQ_plt <- function(){
+    qqman::qq(global_value$gwas_res_emmax_vis$P)
+  }
   output$qqplot <- renderPlot({
     validate(
       need( ! is.null(global_value$col1), "Select the Colors"),
       need( ! is.null(global_value$logpvalue),"Select the logpvalue")
     )
-    qqman::qq(global_value$gwas_res_emmax_vis$P)
+    qq_plot <- myQQ_plt()
+    global_value$QQ_plot <- qq_plot
+    print(global_value$QQ_plot)
   })
   
   #--------------------download QQ plot---------------
@@ -430,11 +452,17 @@ server <- function(input, output, session){
       paste0(Sys.Date(), ".", input$trait,".GWAS.EMMAX.cov.QQ_plot.png")
     },
     content <-  function(file){
-      png(file, width = 7*300, height = 7*300)
-      qqman::qq(global_value$gwas_res_emmax_vis$P)
+      withProgress(message = "Download in progress",
+                   detail = "This may take a while...",
+                   value = 0,{
+                     for (i in 1:15){
+                       incProgress(1/15)
+                       Sys.sleep(0.01)
+                     }
+      png(file, width = 7*300, height = 7*300, res = 300)
+      myQQ_plt()
       dev.off()
-    },
-    contentType = "image/png"
+                   })}
   )
   
 #==========================Extraction====================================

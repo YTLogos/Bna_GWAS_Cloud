@@ -201,8 +201,9 @@ splite_pos <- function(data,c){
 
 manhattan_data_prepare <- function(gwas_res_emmax){
   colnames(gwas_res_emmax) <- c("SNP","Beta","SE","P")
-  gwas_res_emmax$CHR <- apply(gwas_res_emmax,1,splite_chr,c="SNP")
-  gwas_res_emmax$BP <- apply(gwas_res_emmax,1,splite_pos,c="SNP")
+  plan(multiprocess)
+  gwas_res_emmax$CHR <- future.apply::future_apply(gwas_res_emmax,1,splite_chr,c="SNP")
+  gwas_res_emmax$BP <- future.apply::future_apply(gwas_res_emmax,1,splite_pos,c="SNP")
   gwas_res_emmax <- gwas_res_emmax%>%select(SNP,CHR,BP,P)
   gwas_res_emmax$CHR <- as.integer(gwas_res_emmax$CHR)
   gwas_res_emmax$BP <- as.integer(gwas_res_emmax$BP)

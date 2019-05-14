@@ -47,8 +47,6 @@ get_gene_from_snp <- function(
   }
   sig.snp$r1 <- r1
   sig.snp$r2 <- r2
-  
-  
   ##search genes
   findgene <- function(i){
     snp_gene = gff[gff$start > sig.snp$r1[i] & gff$end < sig.snp$r2[i] &gff$chr==sig.snp$CHR[i], ]
