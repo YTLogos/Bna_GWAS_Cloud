@@ -207,5 +207,7 @@ manhattan_data_prepare <- function(gwas_res_emmax){
   gwas_res_emmax <- gwas_res_emmax%>%select(SNP,CHR,BP,P)
   gwas_res_emmax$CHR <- as.integer(gwas_res_emmax$CHR)
   gwas_res_emmax$BP <- as.integer(gwas_res_emmax$BP)
+  gwas_res_emmax["P"][gwas_res_emmax["P"]==0] <- NA
+  gwas_res_emmax <- gwas_res_emmax%>%tidyr::drop_na()
   return(gwas_res_emmax)
 }

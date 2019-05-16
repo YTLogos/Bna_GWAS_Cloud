@@ -168,8 +168,6 @@ body <- dashboardBody(
                 status = "primary",
                 width = 12,
                 withSpinner(plotOutput("manhattanplot"), type = "6"),
-                br(),
-                br(),
                 downloadButton("dm", "Manhattan Plot Download")
               )),
             fluidRow(
@@ -178,8 +176,6 @@ body <- dashboardBody(
                 status = "warning",
                 width = 5,
                 withSpinner(plotOutput("qqplot"), type = "8"),
-                br(),
-                br(),
                 downloadButton("download_qqplot","QQ Plot Download")
               )
             )
@@ -222,8 +218,6 @@ body <- dashboardBody(
                 withSpinner(DT::dataTableOutput("related_genes"), type = "7"),
                 br(),
                 br(),
-                br(),
-                br(),
                 downloadButton("download_genes", "Download Genes")
               )
             )
@@ -253,8 +247,6 @@ body <- dashboardBody(
                 status = "warning",
                 width = 12,
                 withSpinner(DT::dataTableOutput("gene_annotation"), type = "7"),
-                br(),
-                br(),
                 downloadButton("gene_anno_download", "Download Genes")
               )
             )
