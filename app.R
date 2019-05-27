@@ -8,6 +8,7 @@ library(Cairo)
 library(openxlsx)
 library(data.table)
 library(future.apply)
+library(writexl)
 
 rm(list=ls())
 source("gwas_emmax_cov.R")
@@ -218,7 +219,7 @@ body <- dashboardBody(
                 withSpinner(DT::dataTableOutput("related_genes"), type = "7"),
                 br(),
                 br(),
-                downloadButton("download_genes", "Download Genes")
+                downloadButton("download_genes", "Download Significant Genes")
               )
             )
             ),
@@ -247,7 +248,7 @@ body <- dashboardBody(
                 status = "warning",
                 width = 12,
                 withSpinner(DT::dataTableOutput("gene_annotation"), type = "7"),
-                downloadButton("gene_anno_download", "Download Genes")
+                downloadButton("gene_anno_download", "Download Genes with Annotation")
               )
             )
             )
@@ -521,10 +522,10 @@ server <- function(input, output, session){
   #---------------gene annotation download---------------
   output$gene_anno_download <- downloadHandler(
     filename = function(){
-      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"Kb.anno.txt")
+      paste0(Sys.Date(), ".", input$trait,".EMMAX.cov.signloci.1e-",input$sig_p,".",input$distance,"Kb.anno.xlsx")
     },
     content = function(file){
-      write.table(gene_anno_data(), file, row.names = FALSE, col.names = TRUE, quote = FALSE)
+      writexl::write_xlsx(gene_anno_data(), file)
     }
   )
 }
