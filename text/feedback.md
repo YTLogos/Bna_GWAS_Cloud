@@ -1,7 +1,7 @@
 # Feedback
 
-This App is developed and maintained by [Tao Yan](https://taoyan.netlify.com/) at the [Jianglab](https://person.zju.edu.cn/en/0005104), Institute of Crop science, [College of Agriculture and Biotechnology (CAB)](http://www.cab.zju.edu.cn/en/), Zhejiang University.
+This App is developed and maintained by <a href="https://taoyan.netlify.com/" target="_blank">**Tao Yan**</a> at the <a href="https://person.zju.edu.cn/en/0005104" target="_blank">**Jianglab**</a>, Institute of Crop science, <a href="http://www.cab.zju.edu.cn/en/" target="_blank">**College of Agriculture and Biotechnology (CAB)**</a>, **Zhejiang University**.
 
-If you have any questions, comments, or suggestions, feel free to contact the developer at tyan@zju.edu.cn.
+If you have any questions, comments, or suggestions, feel free to contact the developer at **tyan@zju.edu.cn**.
 
 

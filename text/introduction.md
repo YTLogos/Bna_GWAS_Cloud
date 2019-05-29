@@ -1,12 +1,12 @@
 # Introduction
 
-Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries ([**Wu et al., 2018**](https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub)).
+Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2018**</a>).
 
 <img src="https://raw.githubusercontent.com/YTLogos/Pic_blog/master/Bna_map.png" width="1000" hegiht="1200" align=center />
 
 In genetics, a genome-wide association study (**GWAS**), also known as whole genome association study (WGAS), is an observational study of a genome-wide set of genetic variants in different individuals to see if any variant is associated with a trait. **GWAS** typically focus on associations between single-nucleotide polymorphisms (**SNPs**) and traits like major agronomic traits.
 
-In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in [**R**](https://www.r-project.org/) with [**`Shiny`**](https://shiny.rstudio.com/). This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
+In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in <a href="https://www.r-project.org/" target="_blank">**R**</a> with <a href="https://shiny.rstudio.com/" target="_blank">**`Shiny`**</a>. This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
 
 ## 1、Data input
 
@@ -41,11 +41,11 @@ table th:first-of-type {
 
 Where, column one correspond to samples, column two correspond to phenotype values.
 
-An example of the expected input phenotype dataset can be accessible [**here**](http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt).
+An example of the expected input phenotype dataset can be accessible <a href="http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt" target="_blank"> **here**</a>.
 
 ### 1.2 Others
 
-Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the [**EMMAX**](https://genome.sph.umich.edu/wiki/EMMAX) model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
+Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the <a href="https://genome.sph.umich.edu/wiki/EMMAX" target="_blank">**EMMAX**</a> model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
 
 # 2、Visualization
 

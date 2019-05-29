@@ -56,8 +56,8 @@ sidebar <- dashboardSidebar(
     draggable = F,
     width='100%',
     height='auto',
-    div(span("Developed by",style="color:grey"),a("Jianglab", href="https://person.zju.edu.cn/en/0005104"), span(a(", College of", href="http://www.cab.zju.edu.cn/en/"), style="color:grey")),
-    div(a("Agriculture and Biotechnology (CAB),", href='http://www.cab.zju.edu.cn/en/'), style="color:grey"),
+    div(span("Developed by",style="color:grey"),a("Jianglab", href="https://person.zju.edu.cn/en/0005104", target='_blank'), span(a(", College of", href="http://www.cab.zju.edu.cn/en/", target='_blank'), style="color:grey")),
+    div(a("Agriculture and Biotechnology (CAB),", href='http://www.cab.zju.edu.cn/en/', target='_blank'), style="color:grey"),
     div("Zhejiang University", style="color:grey")
   ) 
 )
@@ -337,6 +337,13 @@ server <- function(input, output, session){
     out <- output(trait = global_value$trait)
     file <- pheno()
     write.table(file, trait_name(), col.names = FALSE, row.names = FALSE, quote = FALSE)
+    withProgress(message = "GWAS RUN in progress",
+                 detail = "This may take 1 min! Please Wait! ...",
+                 value = 0,{
+                   for (i in 1:15){
+                     incProgress(1/15)
+                     Sys.sleep(0.01)
+                   }
     gwas_emmax(phenotype=trait_name(), out = out)
     res <- data.table::fread(paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
     colnames(res) <- c("SNPID","beta","SE(beta)","p-value")
@@ -350,7 +357,7 @@ server <- function(input, output, session){
                     scrollX=TRUE,
                     columnDefs=list(list(className="dt-right", target="_all"))
                   ))
-  })
+  })})
   
   #--------------download gwas_res---------
   
@@ -360,7 +367,7 @@ server <- function(input, output, session){
     },
       content <-  function(file){
         withProgress(message = "Download in progress",
-                     detail = "This may take a while...",
+                     detail = "This may take a while ...",
                      value = 0,{
                        for (i in 1:15){
                          incProgress(1/15)
@@ -393,14 +400,16 @@ server <- function(input, output, session){
       need( ! is.null(global_value$col1), "Select the Colors"),
       need( ! is.null(global_value$logpvalue),"Select the logpvalue")
     )
-
+    withProgress(message = "Visualization in progress",
+                 detail = "This may take 2.5 mins! Please Wait! ...",
+                 value = 0,{
+                   for (i in 1:15){
+                     incProgress(1/15)
+                     Sys.sleep(0.01)
+                   }
     p_manhattan <- manhattan()
     global_value$manhattan_plot <- p_manhattan
-    print(global_value$manhattan_plot)
-    # gwas_data <- global_value$res
-    # gwas_data_vis <- manhattan_data_prepare(gwas_res_emmax = gwas_data)
-    # global_value$gwas_res_emmax_vis <- gwas_data_vis
-    # ggmanhattan(gwasres = global_value$gwas_res_emmax_vis,color = c(global_value$col1,global_value$col2), p_select = global_value$logpvalue, title = paste0("Manhattan Plot of Phenotype ","(",global_value$trait,")"))
+    print(global_value$manhattan_plot)})
   })
   
   #--------------------download manhattan plot---------------
@@ -410,7 +419,7 @@ server <- function(input, output, session){
     },
     content <-  function(file){
       withProgress(message = "Download in progress",
-                   detail = "This may take a while...",
+                   detail = "This may take a while ...",
                    value = 0,{
                      for (i in 1:15){
                        incProgress(1/15)
@@ -446,7 +455,7 @@ server <- function(input, output, session){
     },
     content <-  function(file){
       withProgress(message = "Download in progress",
-                   detail = "This may take a while...",
+                   detail = "This may take a while ...",
                    value = 0,{
                      for (i in 1:15){
                        incProgress(1/15)
