@@ -11,7 +11,7 @@ library(future.apply)
 library(writexl)
 
 rm(list=ls())
-source("gwas_emmax_cov.R")
+source("script/gwas_emmax_cov.R")
 options(shiny.maxRequestSize = 500*1024^2)
 
 header <- dashboardHeader(title = "Bna-GWAS-Cloud")
@@ -387,7 +387,7 @@ server <- function(input, output, session){
   
   
   #-----------manhattan plot--------------
-  source("manhattan_qq_plot.R")
+  source("script/manhattan_qq_plot.R")
   
   manhattan <- function(){
     gwas_data <- global_value$res
@@ -468,7 +468,7 @@ server <- function(input, output, session){
   )
   
 #==========================Extraction====================================
-  source("extraxt_gene.R")
+  source("script/extraxt_gene.R")
   
   observeEvent(input$run_extraction,{
     global_value$sig_p <- input$sig_p

@@ -204,7 +204,7 @@ manhattan_data_prepare <- function(gwas_res_emmax){
   plan(multiprocess)
   gwas_res_emmax$CHR <- future.apply::future_apply(gwas_res_emmax,1,splite_chr,c="SNP")
   gwas_res_emmax$BP <- future.apply::future_apply(gwas_res_emmax,1,splite_pos,c="SNP")
-  gwas_res_emmax <- gwas_res_emmax%>%select(SNP,CHR,BP,P)
+  gwas_res_emmax <- gwas_res_emmax%>%dplyr::select(SNP,CHR,BP,P)
   gwas_res_emmax$CHR <- as.integer(gwas_res_emmax$CHR)
   gwas_res_emmax$BP <- as.integer(gwas_res_emmax$BP)
   gwas_res_emmax["P"][gwas_res_emmax["P"]==0] <- NA
