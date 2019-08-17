@@ -8,9 +8,9 @@ In genetics, a genome-wide association study (**GWAS**), also known as whole gen
 
 In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**Bna-GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in <a href="https://www.r-project.org/" target="_blank">**R**</a> with <a href="https://shiny.rstudio.com/" target="_blank">**`Shiny`**</a>. This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
 
-## 1、Data input
+# Data input
 
-### 1.1 phenotype data (**`.txt`**)
+## phenotype data (**`.txt`**)
 
 > **Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!**
 
@@ -43,18 +43,18 @@ Where, column one correspond to samples, column two correspond to phenotype valu
 
 An example of the expected input phenotype dataset can be accessible <a href="http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt" target="_blank"> **here**</a>.
 
-### 1.2 Others
+## Other parameters
 
 Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the <a href="https://genome.sph.umich.edu/wiki/EMMAX" target="_blank">**EMMAX**</a> model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.
 
-# 2、Visualization
+# Visualization
 
 For the `Visualization` section in this App, it is aiming to visualize the Manhattan plot and QQ plot. You can choose the alternate colors for alternate chromosomes and p-value threshold (default: p-value=5).
 
-# 3、Extraction
+# Extraction
 
 The extraction of significant genes is based on the significant p-value of SNPs. So here you need choose the p-value threshold and the distance up/down-stream of SNPs (`recommended`) (default: 75kb).
 
-# 4、Annotation
+# Annotation
 
 This section is designed for gene annotation based on different databases (`eggNOG`, `GO`, `KEGG`, `NR`, etc.).
