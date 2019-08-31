@@ -1,6 +1,6 @@
 # Introduction
 
-Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2018**</a>).
+Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2019**</a>).
 
 <img src="https://raw.githubusercontent.com/YTLogos/Pic_blog/master/Bna_map.png" width="1000" hegiht="1200" align=center />
 
