@@ -1,6 +1,6 @@
-# <font color=green size=6>Introduction</font>
+# <font face="Time" color=green size=6>Introduction</font>
 
-<font size=4>Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2019**</a>).
+<font face="Time" size=4>Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2019**</a>).
 
 <img src="/database/taoyan/gwas_data/Bna_map.png" width="1000" hegiht="1200" align=center />
 
@@ -8,15 +8,15 @@ In genetics, a genome-wide association study (**GWAS**), also known as whole gen
 
 In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**Bna-GWAS-Cloud**](http://10.75.29.207:3838/gwas/)) in <a href="https://www.r-project.org/" target="_blank">**R**</a> with <a href="https://shiny.rstudio.com/" target="_blank">**`Shiny`**</a>. This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes</font>.
 
-# <font color=green size=6>Data input</font>
+# <font face="Time" color=green size=6>Data input</font>
 
-## <font color=green size=5>phenotype data (.txt)</font>
+## <font color=green size=5 face="Time">phenotype data (.txt)</font>
 
-> **<font color=red size=4> Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!</font>**
+> **<font color=red size=4 face="Time"> Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!</font>**
 
-> <font color=green size=4>I highly recommended first download the example of the expected input phenotype dataset below, and then replace the phenotype values with you own data</font>.
+> <font color=green size=4 face="Time">I highly recommended first download the example of the expected input phenotype dataset below, and then replace the phenotype values with you own data</font>.
 
-<font size=4>You just need upload your phenotype data to run **GWAS**. Here we just use the **`297`** core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
+<font size=4 face="Time">You just need upload your phenotype data to run **GWAS**. Here we just use the **`297`** core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
 
 <style>
 table th:first-of-type {
@@ -43,18 +43,18 @@ Where, column one correspond to samples, column two correspond to phenotype valu
 
 An example of the expected input phenotype dataset can be accessible <a href="http://10.75.29.207/lab_pub_file/file/sample_phenotype.txt" target="_blank"> **here**</a>.</font>
 
-## <font color=green szie=5>Other parameters</font>
+## <font color=green szie=5 face="Time">Other parameters</font>
 
-<font size=4>Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the <a href="https://genome.sph.umich.edu/wiki/EMMAX" target="_blank">**EMMAX**</a> model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.</font>
+<font size=4 face="Time">Next you need enter your trait name (`recommended`) (default: Bna_trait). Now just support the <a href="https://genome.sph.umich.edu/wiki/EMMAX" target="_blank">**EMMAX**</a> model. After all the prepared works are ready, then clink **Run Analysis** to start GWAS.</font>
 
-# <font color=green size=6>Visualization</font>
+# <font color=green size=6 face="Time">Visualization</font>
 
-<font size=4>For the `Visualization` section in this App, it is aiming to visualize the Manhattan plot and QQ plot. You can choose the alternate colors for alternate chromosomes and p-value threshold (default: p-value=5).</font>
+<font size=4 face="Time">For the `Visualization` section in this App, it is aiming to visualize the Manhattan plot and QQ plot. You can choose the alternate colors for alternate chromosomes and p-value threshold (default: p-value=5).</font>
 
-# <font color=green size=6>Extraction</font>
+# <font color=green size=6 face="Time">Extraction</font>
 
-<font size=4>The extraction of significant genes is based on the significant p-value of SNPs. So here you need choose the p-value threshold and the distance up/down-stream of SNPs (`recommended`) (default: 75kb).</font>
+<font size=4 face="Time">The extraction of significant genes is based on the significant p-value of SNPs. So here you need choose the p-value threshold and the distance up/down-stream of SNPs (`recommended`) (default: 75kb).</font>
 
-# <font color=green size=6>Annotation</font>
+# <font color=green size=6 face="Time">Annotation</font>
 
-<font size=4>This section is designed for gene annotation based on different databases (`eggNOG`, `GO`, `KEGG`, `NR`, etc.).</font>
+<font size=4 face="Time">This section is designed for gene annotation based on different databases (`eggNOG`, `GO`, `KEGG`, `NR`, etc.).</font>
