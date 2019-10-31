@@ -1,12 +1,12 @@
 #GWAS with EMMAX model
 
 emmax <- "/home/taoyan/biosoft/emmax/emmax-intel64"
-genotype <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute"
-k <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.hBN.kinf"
-cov <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/K_Q/Brnu.emmax.cov.txt"
-tfam_path <- "/labdata/Brnu_pop_data/Brnu_pop_analysis/data/genotype/Brnu_core_impute.tfam"
-Bna_anno <- "/database/reference/Bna_Darmor/Bna_Darmor_anno.xlsx"
-Bna_darmor_geneid <- "/database/reference/Bna_Darmor/Bna_darmor_gene_id_info.txt"
+genotype <- "/database/taoyan/gwas_data/Bna.core.maf0.05.int0.9"
+k <- "/database/taoyan/gwas_data/Bna.core.maf0.05.int0.9.BN.kinf"
+cov <- "/database/taoyan/gwas_data/Bna.core.emmax.cov.txt"
+tfam_path <- "/database/taoyan/gwas_data/Bna.core.maf0.05.int0.9.tfam"
+Bna_anno <- "/database/taoyan/gwas_data/Bna_Darmor_anno.xlsx"
+Bna_darmor_geneid <- "/database/taoyan/gwas_data/Bna_darmor_gene_id_info.txt"
 Bna_anno <- openxlsx::read.xlsx(Bna_anno)
 Bna_geneid <- read.table(Bna_darmor_geneid, header = FALSE, stringsAsFactors = FALSE)
 colnames(Bna_geneid) <- c("chr", "start", "end", "gene")
@@ -34,7 +34,7 @@ global_theme <-  theme(axis.text.y   = element_text(size=13, face="bold", colour
 tfam <- read.table(tfam_path, header = FALSE, stringsAsFactors = FALSE)
 
 output <- function(trait){
-  result_path <- paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", trait,".GWAS.EMMAX.cov")
+  result_path <- paste0("/database/public/lab_pub_file/gwas/",Sys.Date(), ".", trait,".GWAS.EMMAX.cov")
   return(result_path)
 }
 

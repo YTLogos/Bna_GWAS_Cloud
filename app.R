@@ -282,7 +282,7 @@ server <- function(input, output, session){
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
-    name <- paste0("/labdata/public/lab_pub_file/gwas/", input$trait,".txt")
+    name <- paste0("/database/public/lab_pub_file/gwas/", input$trait,".txt")
     return(name)
   })
   #========================run gwas===========================
@@ -345,7 +345,7 @@ server <- function(input, output, session){
                      Sys.sleep(0.01)
                    }
     gwas_emmax(phenotype=trait_name(), out = out)
-    res <- data.table::fread(paste0("/labdata/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
+    res <- data.table::fread(paste0("/database/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
     colnames(res) <- c("SNPID","beta","SE(beta)","p-value")
     global_value$res <- res
     DT::datatable(global_value$res,

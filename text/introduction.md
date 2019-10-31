@@ -6,7 +6,7 @@ Rapeseed (***Brassica napus*** L.) is an important source of edible oil and prot
 
 In genetics, a genome-wide association study (**GWAS**), also known as whole genome association study (WGAS), is an observational study of a genome-wide set of genetic variants in different individuals to see if any variant is associated with a trait. **GWAS** typically focus on associations between single-nucleotide polymorphisms (**SNPs**) and traits like major agronomic traits.
 
-In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**Bna-GWAS-Cloud**](http://10.75.29.165:3838/gwas/)) in <a href="https://www.r-project.org/" target="_blank">**R**</a> with <a href="https://shiny.rstudio.com/" target="_blank">**`Shiny`**</a>. This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
+In order to make better use of this huge ***B. napus*** gerplasm accessions, we develop this interactive application ([**Bna-GWAS-Cloud**](http://10.75.29.207:3838/gwas/)) in <a href="https://www.r-project.org/" target="_blank">**R**</a> with <a href="https://shiny.rstudio.com/" target="_blank">**`Shiny`**</a>. This aaplication can conduct **GWAS**, visualization of **GWAS** results (Manhattan plot and QQ plot), extraction of significant genes and annotation of genes.
 
 # Data input
 
@@ -41,7 +41,7 @@ table th:first-of-type {
 
 Where, column one correspond to samples, column two correspond to phenotype values.
 
-An example of the expected input phenotype dataset can be accessible <a href="http://10.75.29.165/lab_pub_file/file/sample_phenotype.txt" target="_blank"> **here**</a>.
+An example of the expected input phenotype dataset can be accessible <a href="http://10.75.29.207/lab_pub_file/file/sample_phenotype.txt" target="_blank"> **here**</a>.
 
 ## Other parameters
 
