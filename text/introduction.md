@@ -12,11 +12,11 @@ In order to make better use of this huge ***B. napus*** gerplasm accessions, we 
 
 ## <font color=green size=5 face="Time">phenotype data (.txt)</font>
 
-> **<font color=red size=4 face="Time"> Noted: Your Samples Uploaded MUST Be The 297 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 297 Core Collection Samples Here, JUST REMOVE THEM!</font>**
+> **<font color=red size=4 face="Time"> Noted: Your Samples Uploaded MUST Be The 300 Core Collection Samples Used Here ! So If Some Samples Are Not In Your LIST, You Need Add Them In Your List, And Set The Value NA. If Some Samples In Your List Are Not In The 300 Core Collection Samples Here, JUST REMOVE THEM!</font>**
 
 > <font color=green size=4 face="Time">I highly recommended first download the example of the expected input phenotype dataset below, and then replace the phenotype values with you own data</font>.
 
-<font size=4 face="Time">You just need upload your phenotype data to run **GWAS**. Here we just use the **`297`** core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
+<font size=4 face="Time">You just need upload your phenotype data to run **GWAS**. Here we just use the **`300`** core collection gerplasm which represent the most of genetic resources of 1000 ***B. napus*** gerplasm accessions. an example of the expected input data format is present as below:
 
 <style>
 table th:first-of-type {
