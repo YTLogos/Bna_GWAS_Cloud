@@ -8,7 +8,7 @@
 <p align="center">
 <img src="/image/Bna_map.png" width="800" hegiht="1000">
 </p>
-<p style="text-align:center">Fig. 1 The geographic distribution of rapeseed accessions </p>
+<p style="text-align:center">The geographic distribution of rapeseed accessions </p>
 
 In genetics, a genome-wide association study (**GWAS**), also known as whole genome association study (WGAS), is an observational study of a genome-wide set of genetic variants in different individuals to see if any variant is associated with a trait. **GWAS** typically focus on associations between single-nucleotide polymorphisms (**SNPs**) and traits like major agronomic traits.
 

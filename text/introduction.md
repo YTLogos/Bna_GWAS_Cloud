@@ -2,7 +2,12 @@
 
 <font face="Time" size=4>Rapeseed (***Brassica napus*** L.) is an important source of edible oil and protein-rich livestock feed in the world. ***B. napus*** (AACC) was ancestrally originated from an interspecific hybridization between two diploid progenitors, ***B. rapa*** (AA) (n = 10) and ***B. oleracea*** (CC) (n = 9), less than 7500 years ago. In our previous study, we resequenced a world-wide collection of `991` ***B. napus*** gerplasm accessions, including 658 winter types, 145 semi-winter types and 188 spring types, from 39 countries (<a href="https://www.sciencedirect.com/science/article/pii/S1674205218303435?via%3Dihub" target="_blank">**Wu et al., 2019**</a>).
 
-<img src="/database/taoyan/gwas_data/Bna_map.png" width="1000" hegiht="1200" align=center />
+<p>&nbsp;</p>
+<p align="center">
+<img src="/image/Bna_map.png" width="800" hegiht="1000">
+</p>
+<p style="text-align:center">The geographic distribution of rapeseed accessions </p>
+
 
 In genetics, a genome-wide association study (**GWAS**), also known as whole genome association study (WGAS), is an observational study of a genome-wide set of genetic variants in different individuals to see if any variant is associated with a trait. **GWAS** typically focus on associations between single-nucleotide polymorphisms (**SNPs**) and traits like major agronomic traits.
 
