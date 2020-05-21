@@ -1,17 +1,5 @@
-library(shiny)
-library(shinydashboard)
-library(shinycssloaders)
-library(DT)
-library(tidyverse)
-library(colourpicker)
-library(Cairo)
-library(openxlsx)
-library(data.table)
-library(future.apply)
-library(writexl)
-
 rm(list=ls())
-source("script/gwas_emmax_cov.R")
+source("Global.R")
 options(shiny.maxRequestSize = 500*1024^2)
 
 header <- dashboardHeader(title = "Bna-GWAS-Cloud")
@@ -48,7 +36,7 @@ sidebar <- dashboardSidebar(
     draggable = F,
     width='100%',
     height="auto",
-    p(a(icon('link fa-2x'),href='https://taoyan.netlify.com/',target='_blank'))),
+    p(a(icon('link fa-2x'),href='https://taoyan.netlify.app',target='_blank'))),
   
   absolutePanel(
     bottom = 20,
@@ -56,7 +44,7 @@ sidebar <- dashboardSidebar(
     draggable = F,
     width='100%',
     height='auto',
-    div(span("Developed by",style="color:grey"),a("Jianglab", href="https://person.zju.edu.cn/en/0005104", target='_blank'), span(a(", College of", href="http://www.cab.zju.edu.cn/en/", target='_blank'), style="color:grey")),
+    div(span("Developed by",style="color:grey"),a("JiangLXlab", href="http://rapeseed.zju.edu.cn/", target='_blank'), span(a(", College of", href="http://www.cab.zju.edu.cn/en/", target='_blank'), style="color:grey")),
     div(a("Agriculture and Biotechnology (CAB),", href='http://www.cab.zju.edu.cn/en/', target='_blank'), style="color:grey"),
     div("Zhejiang University", style="color:grey")
   ) 
@@ -282,7 +270,7 @@ server <- function(input, output, session){
   )
   trait_name <- eventReactive(input$run_gwas,{
     #name <- paste0(getwd(),"/", input$trait,".txt")
-    name <- paste0("/database/public/lab_pub_file/gwas/", input$trait,".txt")
+    name <- paste0("./tmp/", input$trait,".txt")
     return(name)
   })
   #========================run gwas===========================
@@ -345,7 +333,7 @@ server <- function(input, output, session){
                      Sys.sleep(0.01)
                    }
     gwas_emmax(phenotype=trait_name(), out = out)
-    res <- data.table::fread(paste0("/database/public/lab_pub_file/gwas/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
+    res <- data.table::fread(paste0("./tmp/",Sys.Date(), ".", global_value$trait,".GWAS.EMMAX.cov.ps"), data.table = FALSE)
     colnames(res) <- c("SNPID","beta","SE(beta)","p-value")
     global_value$res <- res
     DT::datatable(global_value$res,
@@ -489,11 +477,11 @@ server <- function(input, output, session){
     global_value$gene_sig_select <- gene_sig_select
     DT::datatable(global_value$gene_sig_select,
                   rownames = FALSE,
-                  filter = "top",
-                  selection = "single",
+                  filter = "bottom",
                   options = list(
                     pageLength=10,
                     scrollX=TRUE,
+		    fixedColumns = TRUE,
                     columnDefs=list(list(className="dt-right", target="_all"))
                   ))
   })
@@ -519,13 +507,13 @@ server <- function(input, output, session){
   output$gene_annotation <- renderDT({
     DT::datatable(gene_anno_data(),
                   rownames = FALSE,
-                  filter = "top",
-                  selection = "single",
+                  filter = "bottom",
                   options = list(
                     pageLength=10,
                     scrollX=TRUE,
+                    fixedColumns = TRUE,
                     columnDefs=list(list(className="dt-right", target="_all"))
-                  ))
+                  ), class = "white-space: nowrap")
   })
   
   #---------------gene annotation download---------------
