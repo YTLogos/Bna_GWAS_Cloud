@@ -6,7 +6,7 @@
 
 <p>&nbsp;</p>
 <p align="center">
-<img src="/image/accession_distribution.png" width="800" hegiht="1000">
+<img src="/image/Bna_map.png" width="800" hegiht="1000">
 </p>
 <p style="text-align:center">Fig. 1 The geographic distribution of rapeseed accessions </p>
 
