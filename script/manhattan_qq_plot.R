@@ -68,7 +68,7 @@ ggmanhattan <- function(
   title="Manhattan Plot",
   color= c("#FF8C00", "#556B2F"),
   pointsize= 0.75,
-  p_select,
+  p_select = 6,
   verbose=TRUE,...)
 {
   dfnames <- names(gwasres)
