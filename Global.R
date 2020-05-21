@@ -9,9 +9,9 @@ library(openxlsx)
 library(data.table)
 library(future.apply)
 library(writexl)
+library(qqman)
 
 source("script/gwas_emmax_cov.R")
 source("script/extraxt_gene.R")
 source("script/manhattan_qq_plot.R")
 load("./data/Bna_gene_anno.RData")
-
