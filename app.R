@@ -423,7 +423,6 @@ server <- function(input, output, session) {
 
 
   #-----------manhattan plot--------------
-  source("script/manhattan_qq_plot.R")
 
   manhattan <- function() {
     gwas_data <- global_value$res
@@ -516,7 +515,6 @@ server <- function(input, output, session) {
   )
 
   # ==========================Extraction====================================
-  source("script/extraxt_gene.R")
 
   observeEvent(input$run_extraction, {
     global_value$sig_p <- input$sig_p

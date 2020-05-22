@@ -192,18 +192,20 @@ ggmanhattan <- function(
 
 # ============================gwas result manipulation====================
 
-splite_chr <- function(data, c) {
-  c(str_split(data[c], pattern = "_")[[1]][1])
-}
-splite_pos <- function(data, c) {
-  c(str_split(data[c], pattern = "_")[[1]][2])
-}
+# splite_chr <- function(data, c) {
+#   c(str_split(data[c], pattern = "_")[[1]][1])
+# }
+# splite_pos <- function(data, c) {
+#   c(str_split(data[c], pattern = "_")[[1]][2])
+# }
 
 manhattan_data_prepare <- function(gwas_res_emmax) {
   colnames(gwas_res_emmax) <- c("SNP", "Beta", "SE", "P")
-  plan(multiprocess)
-  gwas_res_emmax$CHR <- future.apply::future_apply(gwas_res_emmax, 1, splite_chr, c = "SNP")
-  gwas_res_emmax$BP <- future.apply::future_apply(gwas_res_emmax, 1, splite_pos, c = "SNP")
+  # plan(multiprocess)
+  # gwas_res_emmax$CHR <- future.apply::future_apply(gwas_res_emmax, 1, splite_chr, c = "SNP")
+  # gwas_res_emmax$BP <- future.apply::future_apply(gwas_res_emmax, 1, splite_pos, c = "SNP")
+  chr_pos <- colsplit(string=gwas_res_emmax$SNP, pattern="_", names=c("CHR", "BP"))
+  gwas_res_emmax <- cbind(gwas_res_emmax, chr_pos)
   gwas_res_emmax <- gwas_res_emmax %>% dplyr::select(SNP, CHR, BP, P)
   gwas_res_emmax$CHR <- as.integer(gwas_res_emmax$CHR)
   gwas_res_emmax$BP <- as.integer(gwas_res_emmax$BP)

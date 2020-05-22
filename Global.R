@@ -10,6 +10,7 @@ library(data.table)
 library(future.apply)
 library(writexl)
 library(qqman)
+library(reshape2)
 
 source("script/gwas_emmax_cov.R")
 source("script/extraxt_gene.R")
