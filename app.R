@@ -275,12 +275,7 @@ server <- function(input, output, session){
   })
   #========================run gwas===========================
   pheno <- reactive({
-    inFile <- input$phenotype
-    
-    if(is.null(inFile))
-      return(NULL)
-    
-    df <- read.table(inFile$datapath, header = FALSE, stringsAsFactors = FALSE)
+    df <- readNewData(fileinfo = input$phenotype)
     df <- df[match(tfam$V1, df$V1),]
     df[df==-999] <- NA
     df <- cbind(df[,1],df)
