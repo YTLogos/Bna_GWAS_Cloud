@@ -48,7 +48,7 @@ sidebar <- dashboardSidebar(
     draggable = F,
     width = "100%",
     height = "auto",
-    div(span("Developed by", style = "color:grey"), a("JiangLXlab", href = "http://rapeseed.zju.edu.cn/", target = "_blank"), span(a(", College of", href = "http://www.cab.zju.edu.cn/en/", target = "_blank"), style = "color:grey")),
+    div(span("Developed by", style = "color:grey"), a("JiangLX Lab", href = "http://rapeseed.zju.edu.cn", target = "_blank"), span(a(", College of", href = "http://www.cab.zju.edu.cn/en/", target = "_blank"), style = "color:grey")),
     div(a("Agriculture and Biotechnology (CAB),", href = "http://www.cab.zju.edu.cn/en/", target = "_blank"), style = "color:grey"),
     div("Zhejiang University", style = "color:grey")
   )
