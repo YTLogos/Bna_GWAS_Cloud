@@ -313,7 +313,6 @@ server <- function(input, output, session) {
     if (is.null(inFile)) {
       return(NULL)
     }
-
     df <- read.table(inFile$datapath, header = FALSE, stringsAsFactors = FALSE)
     df <- left_join(core, df, by = c("core" = "V1"))
     df <- df[match(tfam$V1, df$core), ]
