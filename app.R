@@ -23,7 +23,7 @@ sidebar <- dashboardSidebar(
     draggable = F,
     width = "100%",
     height = "auto",
-    p(a(icon("github fa-2x"), href = "https://github.com/YTLogos", target = "_blank"))
+    p(a(icon("github fa-2x"), href = "https://github.com/YTLogos/Bna_GWAS_Cloud", target = "_blank"))
   ),
   absolutePanel(
     bottom = 77,
