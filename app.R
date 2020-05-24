@@ -313,9 +313,9 @@ server <- function(input, output, session) {
     if (is.null(inFile)) {
       return(NULL)
     }
-
     df <- read.table(inFile$datapath, header = FALSE, stringsAsFactors = FALSE)
-    df <- df[match(tfam$V1, df$V1), ]
+    df <- left_join(core, df, by = c("core" = "V1"))
+    df <- df[match(tfam$V1, df$core), ]
     df[df == -999] <- NA
     df <- cbind(df[, 1], df)
     return(df)
