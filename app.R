@@ -50,7 +50,7 @@ sidebar <- dashboardSidebar(
     height = "auto",
     div(span("Developed by", style = "color:grey"), a("JiangLX Lab", href = "http://rapeseed.zju.edu.cn", target = "_blank"), span(a(", College of", href = "http://www.cab.zju.edu.cn/en/", target = "_blank"), style = "color:grey")),
     div(a("Agriculture and Biotechnology (CAB),", href = "http://www.cab.zju.edu.cn/en/", target = "_blank"), style = "color:grey"),
-    div(a("Zhejiang University,",href="http://www.zju.edu.cn/english/",target="_blank"), style = "color:grey")
+    div(a("Zhejiang University,", href = "http://www.zju.edu.cn/english/", target = "_blank"), style = "color:grey")
   )
 )
 
@@ -315,7 +315,8 @@ server <- function(input, output, session) {
     }
 
     df <- read.table(inFile$datapath, header = FALSE, stringsAsFactors = FALSE)
-    df <- df[match(tfam$V1, df$V1), ]
+    df <- left_join(core, df, by = c("core" = "V1"))
+    df <- df[match(tfam$V1, df$core), ]
     df[df == -999] <- NA
     df <- cbind(df[, 1], df)
     return(df)

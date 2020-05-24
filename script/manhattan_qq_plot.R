@@ -101,7 +101,6 @@ ggmanhattan <- function(
   df$pvalue <- as.numeric(as.character(df[, pvalue]))
   df$snp <- df[, snp]
 
-  suppressMessages(require(gtools, quietly = TRUE))
   if (is.na(index)) {
     df <- df[order(df$bp), ]
     df <- df[mixedorder(df$chrom), ]
