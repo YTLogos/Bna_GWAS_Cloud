@@ -4,7 +4,6 @@ options(shiny.maxRequestSize = 500 * 1024^2)
 
 header <- dashboardHeader(title = "Bna-GWAS-Cloud")
 sidebar <- dashboardSidebar(
-  collapsed = FALSE,
   sidebarMenu(
     menuItem("Introduction",
       tabName = "intro", icon = icon("user"),
