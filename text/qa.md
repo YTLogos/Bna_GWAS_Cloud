@@ -3,7 +3,7 @@
 
 **<font face="Time" color=green size=4>Q1. How to organize my own phenotype data?</font>**
 
-&emsp;&emsp;<font face="Time" size=4>A: Now the input data **MUST** be `.txt` format. I highly recommended first download the example of the expected input phenotype dataset from <a href="http://10.75.29.207/lab_pub_file/file/sample_phenotype.txt" target="_blank">**here**</a>, and then replace the phenotype values with you own data.</font>
+&emsp;&emsp;<font face="Time" size=4>A: Now the input data **MUST** be `.txt` format. I highly recommended first download the example of the expected input phenotype dataset from <a href="https://raw.githubusercontent.com/YTLogos/pic_link/master/sample_phenotype.txt" target="_blank">**here**</a>, and then replace the phenotype values with you own data.</font>
 
 
 **<font face="Time" color=green size=4>Q2. Can I choose other models (GLM, MLM, CMLM, etc.) to run GWAS?</font>**
