@@ -278,10 +278,15 @@ body <- dashboardBody(
   )
 )
 # ==================================UI part==========================
-ui <- dashboardPage(header = header, sidebar = sidebar, body = body, skin = "red")
+ui <- dashboardPage(header = header, 
+                    sidebar = sidebar, 
+                    body = body, 
+                    skin = "red"
+                    )
 
 # ===================SERVER part============================
 server <- function(input, output, session) {
+
   options(shiny.usecairo = TRUE)
 
   #--------------------global value setting----------------------
