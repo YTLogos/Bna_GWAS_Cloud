@@ -1,6 +1,6 @@
 # Bna_GWAS_Cloud
  
-Bna_GWAS_Cloud will eventually no longer be supported. I modularize shiny app code at [here](https://github.com/YTLogos/BnaGWAS).
+!!!Important. Bna_GWAS_Cloud will eventually no longer be supported. I modularize shiny app code at [here](https://github.com/YTLogos/BnaGWAS).
 
 
 # <font face="Time" color=green size=6>Introduction</font>
