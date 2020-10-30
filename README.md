@@ -1,6 +1,6 @@
 # Bna_GWAS_Cloud
  
-<font color=red size=10>!!! Important. Bna_GWAS_Cloud will eventually no longer be supported. I modularize shiny app code at [here](https://github.com/YTLogos/BnaGWAS)</font>.
+## <font color=red size=10>!!! Important. Bna_GWAS_Cloud will eventually no longer be supported. I modularize shiny app code at [here](https://github.com/YTLogos/BnaGWAS)</font>.
 
 
 # <font face="Time" color=green size=6>Introduction</font>
